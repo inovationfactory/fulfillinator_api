@@ -13,7 +13,7 @@ module FulfillinatorApi
 				https = Net::HTTP.new(uri.host,uri.port)
 				https.use_ssl = true
 				req = Net::HTTP::Post.new(uri.path)
-				req[:order] = params[:order]
+				req.body = params
 				res = https.request(req)
 			end
 		end
