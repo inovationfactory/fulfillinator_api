@@ -10,10 +10,11 @@ module FulfillinatorApi
 			end
 			def issue_request( action_string, params )
 				uri = URI.parse(full_uri(action_string))
+				https = Net::HTTP.new(uri.host,uri.port)
+				https.use_ssl = true
 				req = Net::HTTP::Post.new(uri.path)
-				req.use_ssl = true
-				req.form_data(params)
-				Net::HTTP.new(uri.host, uri.port).start {|http| http.request(req) }
+				req[:order] = params[:order]
+				res = https.request(req)
 			end
 		end
 	end
