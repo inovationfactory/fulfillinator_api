@@ -6,14 +6,14 @@ module FulfillinatorApi
 				"https://fulfillinator.com/api/v1/"
 			end
 			def full_uri( action_string )
-				"#{base_uri}#{action_string}"
+				"#{base_uri}#{action_string}.json"
 			end
 			def issue_request( action_string, params )
 				uri = URI.parse(full_uri(action_string))
 				https = Net::HTTP.new(uri.host,uri.port)
 				https.use_ssl = true
 				req = Net::HTTP::Post.new(uri.path)
-				req.body = params
+				req.body = params.inspect
 				res = https.request(req)
 			end
 		end
