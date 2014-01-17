@@ -12,9 +12,11 @@ module FulfillinatorApi
 				uri = URI.parse(full_uri(action_string))
 				https = Net::HTTP.new(uri.host,uri.port)
 				https.use_ssl = true
-				req = Net::HTTP::Post.new(uri.path)
-				req.body = params.to_json
-				res = https.request(req)
+				https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+				request = Net::HTTP::Post.new(uri.path)
+				request.add_field('Content-Type', 'application/json')
+				request.body = params.to_json
+				response = https.request(request)
 			end
 		end
 	end
